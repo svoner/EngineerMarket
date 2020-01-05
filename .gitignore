@@ -1,0 +1,10 @@
+*.pyc
+*.cfg
+*.csh
+*.fish
+/.vscode
+/venv
+*.db
+*.swp
+__pycache__
+.DS_Store

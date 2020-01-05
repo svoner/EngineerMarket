@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block app_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ title }}</h3></div>
+    <table class="table table-responsive table-hover">
+        <tr align="center">
+            <td><b>产品名称</b></td>
+            <td><b>描述</b></td>
+            <td><b>价格</b></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% for product in products %}
+        <tr align="center">
+            <td>{{ product.name}}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.price }}</td>
+            <td><a href="{{ url_for('sales.edit_product', id=product.id) }}">修改</a></td>
+            <td><a href="{{ url_for('sales.delete_product', id=product.id) }}">删除</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{{ render_pagination(pagination, endpoint=None, prev='<<', next='>>', ellipses='...', size=None, args={})}}
+{% endblock %}

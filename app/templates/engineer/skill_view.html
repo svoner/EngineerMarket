@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block scripts %}
+{{ super() }}
+{% endblock %}
+{% block app_content %}
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+        <h3 class="panel-title">技能管理</h3>
+    </div>
+    <table class="table table-responsive table-hover">
+        {% for u in users %}
+        <tr>
+            <td>
+                <img src="{{ url_for('static', filename=u.avatar ) }}" width="60px" alt="..." class="img-rounded">
+            </td>
+            <td>{{ u.name }}</td>
+            <td>
+                <table>
+                    {% for skill in u.get_skills() %}
+                    <tr>
+                        <td>{{ skill.product.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            <td>
+                <table>
+                    {% for skill in u.get_skills() %}
+                    <tr>
+                        <td>
+                            {% for i in range(skill.level) %}
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td>
+            <td><a href="{{ url_for('engineer.skill_edit', id=u.id) }}">编辑</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{{ render_pagination(pagination, endpoint=None, prev='<<', next='>>', ellipses='...', size=None, args={})}}
+{% endblock %}

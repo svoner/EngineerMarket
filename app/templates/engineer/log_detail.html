@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block app_content %}
+<div class="col-md-3">
+    {% include "engineer/_order_sidebar.html"%}
+    {% include "engineer/_log_sidebar.html"%}
+</div>
+<div class="col-md-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">日志详情</h3>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt>日志概述</dt>
+                <dd>{{ log.title }}</dd>
+                <dt>进场时间</dt>
+                <dd>{{ log.begin.strftime('%Y-%m-%d  %H:%M') }}</dd>
+                <dt>离场时间</dt>
+                <dd>{{ log.after.strftime('%Y-%m-%d %H:%M') }}</dd>
+                <dt>日志内容</dt>
+                <dd>{{ log.content }}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+{% endblock %}

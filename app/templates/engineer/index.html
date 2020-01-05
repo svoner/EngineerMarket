@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block app_content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">我的信息</h3>
+            </div>
+            <div class="panel-body">
+                <table>
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename=current_user.avatar ) }}" height="200px" alt="..."
+                                class="img-rounded">
+                        </td>
+                        <td><table class="table">
+                            <tr>
+                                <td>我的技能排名</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>当前工单量</td>
+                                <td>0</td>
+                            </tr>
+                        </table>
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <table>
+                                            {% for skill in current_user.get_skills() %}
+                                            <tr>
+                                                <td>{{ skill.product.name }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            {% for skill in current_user.get_skills() %}
+                                            <tr>
+                                                <td>
+                                                    {% for i in range(skill.level) %}
+                                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">最新工单</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    {% for order in new_orders %}
+                    <tr align="center" class="warning">
+                        <td><a href="{{ url_for('engineer.order_detail', id=order.id) }}">{{ order.title }}</a></td>
+                        <td>{{ order.begin_time.strftime('%Y年%m月%d日') or '' }}</td>
+                        <td>{{ order.project.name }}</td>
+                        <td>{{ order.state.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">技能 Top10</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    {% for i in skill_top10 %}
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename=i[0].user.avatar ) }}" width="30px" alt="..."
+                                class="img-rounded">
+                        </td>
+                        <td>第{{ loop.index }}名</td>
+                        <td>{{ i[0].user.name }}</td>
+                        <td>{{ i[2]*100 }}分</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">当月工单量 Top10</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    {% for i in order_top10 %}
+                    <tr>
+                        <td>
+                            <img src="{{ url_for('static', filename=i[0].avatar ) }}" width="30px" alt="..."
+                                class="img-rounded">
+                        </td>
+                        <td>第{{ loop.index }}名</td>
+                        <td>{{ i[0].name }}</td>
+                        <td>{{ i[2] }}单</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

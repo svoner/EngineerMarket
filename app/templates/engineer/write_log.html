@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<div class="col-md-3">
+    {% include "engineer/_order_sidebar.html"%}
+    {% if order.logs.all() != [] %}
+    {% include "engineer/_log_sidebar.html"%}
+    {% endif %}
+</div>
+<div class="col-md-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">填写日志</h3>
+        </div>
+        <div class="panel-body">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#begin').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
+    });
+    $(function () {
+        $('#after').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
+    });
+
+</script>
+{% endblock %}

@@ -1,0 +1,19 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">日志列表</h3>
+    </div>
+    <div class="panel panel-body">
+        <table class="table table-responsive table-hover">
+            {% for l in order.logs %}
+            <tr align="left">
+                <td>
+                    <a href="{{ url_for('engineer.log_view', order_id=order.id,log_id=l.id) }}">
+                        {{ l.begin }}<br>
+                        {{ l.title }}
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>

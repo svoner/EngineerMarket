@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ title }}</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <tr>
+                        <td width="200px"><img src="{{ url_for('static', filename=user.avatar ) }}" width="200px" alt="..."
+                                class="img-rounded"></td>
+                        <td>
+                            <table class="table">
+                                {% for skill in skills %}
+                                <tr>
+                                    <td>{{ skill.product.name }}</td>
+                                    <td>
+                                        {% for i in range(skill.level) %}
+                                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        {% endfor %}
+                                    </td>                    
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="panel-body">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

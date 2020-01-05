@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block app_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">工单列表</h3>
+    </div>
+    <div class="panel-body">
+        <p>我一共派出了<b>{{ current_user.count_orders() or 0 }}</b>单</p>
+        <p>共计<b>{{ current_user.count_hours() or 0 }}</b>人天</p>
+        <p>总计费用<b>{{ current_user.totle_price() }}</b></p>
+    </div>
+    <table class="table table-responsive table-hover">
+        <tr align="center">
+            <td><b>标题</b></td>
+            <td><b>创建时间</b></td>
+            <td><b>进场时间</b></td>
+            <td><b>工时</b></td>
+            <td><b>工程师</b></td>
+            <td><b>项目名称</b></td>
+            <td><b>状态</b></td>
+            <td></td>
+        </tr>
+        {% for order in orders %}
+        <tr align="center">
+            <td><a href="{{ url_for('sales.order_detail', id=order.id) }}">{{ order.title }}</a></td>
+            <td>{{ order.formated_create_time() }}</td>
+            <td>{{ order.begin_time.strftime('%Y年%m月%d日') or '' }}</td>
+            <td>{{ order.working_hours or '' }}</td>
+            <td>{{ order.engineer.name }}</td>
+            <td>{{ order.project.name }}</td>
+            <td class="{{ order.get_state_class() }}">{{ order.state.name }}</td>
+            <td>{% if order.state_id == 5 %}
+                <a href="{{ url_for('sales.delete_order', id=order.id) }}">删除</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{{ render_pagination(pagination, endpoint=None, prev='<<', next='>>', ellipses='...', size=None, args={})}}
+{% endblock %}

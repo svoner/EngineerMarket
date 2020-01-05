@@ -1,0 +1,104 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">工单信息</h3>
+    </div>
+    <div class="panel panel-body">
+        <table class="table">
+            <tr>
+                <td align="right">
+                    <b>标题</b>
+                </td>
+                <td align="left">
+                    {{ order.title}}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>状态</b>
+                </td>
+                <td align="left">
+                    {{ order.state.name }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>包含产品</b>
+                </td>
+                <td align="left">
+                    {% for product in order.get_products() %}
+                    {{ product.name }} <br>
+                    {% endfor %}
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>进场时间</b>
+                </td>
+                <td align="left">
+                    {{ order.begin_time.strftime('%Y年%m月%d日') }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>项目名称</b>
+                </td>
+                <td align="left">
+                    {{ order.project.name }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><b>联系人</b>
+                </td>
+                <td align="left">
+                    {{ order.project.customer_name }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <b>联系电话</b>
+                </td>
+                <td align="left">
+                    {{ order.project.customer_phone }}
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><b>工时</b></td>
+                <td align="left">{{ order.working_hours or '' }}</td>
+            </tr>
+            <tr>
+                <td align="right"><b>费用</b></td>
+                <td align="left">{{ order.calc_price() }}</td>
+            </tr>
+            {% if order.comment_socre != '' %}
+            <tr>
+                <td align="right"><b>评价</b></td>
+                <td align="left">{{ order.get_score_str() }}</td>
+            </tr>
+            {% endif %}
+        </table>
+        {% if current_user.role.name == 'engineer' %}
+        {% if order.state.name == '实施中' %}
+        <p>
+            <a class="btn btn-success" href="{{ url_for('engineer.complete_order', order_id=order.id) }}"
+                role="button">确认完工</a>
+            <a class="btn btn-default" href="{{ url_for('engineer.write_log', order_id=order.id) }}"
+                role="button">填写日志</a>
+        </p>
+        {% endif %}
+        {% if order.state.name == '等待接单' %}
+        <p>
+            <a class="btn btn-warning" href="{{ url_for('engineer.accept_order', order_id=order.id) }}"
+                role="button">接受工单</a>
+            <a class="btn btn-danger" href="{{ url_for('engineer.refuse_order', order_id=order.id) }}"
+                role="button">拒绝工单</a>
+        </p>
+        {% endif %}
+        {% endif %}
+        {% if current_user.role.name == 'sales' 
+            and order.state.name == '已完成' 
+            and not order.comment_score %}
+        <p>
+            <a class="btn btn-info" href="{{ url_for('sales.order_score', id=order.id) }}" role="button">给工单打分</a>
+        </p>
+        {% endif %}
+    </div>
+</div>

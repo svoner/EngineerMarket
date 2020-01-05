@@ -1,0 +1,89 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}
+{% if title %}{{ title }} - 派工管理系统{% else %}派工管理系统{% endif %}
+{% endblock %}
+{% block head %}
+{{ super() }}
+<link type="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for(current_user.get_index()) }}">派工管理系统</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                {% if current_user.role.name == 'engineer' %}
+                <li><a href="{{ url_for('engineer.orders') }}">工单管理</a></li>
+                <li><a href="#">请假调休</a></li>
+                {% if current_user.is_manager == True %}
+                <li><a href="{{ url_for('engineer.skill_view') }}">技能管理</a></li>
+                {% endif %}
+                {% endif %}
+                {% if current_user.role.name == 'sales' %}
+                <li><a href="{{ url_for('sales.place_order') }}">派工</a></li>
+                <li><a href="{{ url_for('sales.engineers') }}">工程师列表</a></li>
+                <li><a href="{{ url_for('sales.orders') }}">派工历史</a></li>
+                {% if current_user.is_manager == True %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">产品管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('sales.products') }}">产品列表</a></li>
+                        <li><a href="{{ url_for('sales.edit_product') }}">添加产品</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false">项目管理<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ url_for('sales.projects') }}">项目列表</a></li>
+                        <li><a href="{{ url_for('sales.edit_project') }}">添加项目</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% endif %}
+                {% if current_user.role.name == 'hr' %}
+                <li><a href="{{ url_for('hr.edit_user') }}">人员录入</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">
+                    {{ current_user.name }}
+                    {% if current_user.state_id %}
+                    <span class="list-group-item-{{ current_user.get_state_class() }}">
+                        ({{ current_user.get_state_name() }})
+                    </span>
+                    {% endif %}
+                </a></li>
+                <li><a href="{{ url_for('auth.reset_password') }}">修改密码</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">注销</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block app_content %}{% endblock %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block app_content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ title }}</h3>
+            </div>
+            <div class="panel-body">
+                <p class="col-sm-2"><b>派工说明</b></p>
+                <div class="col-sm-10">
+                    <p>派工同事务必描述清实际工作内容，如果工时对应不准备后期以实际工作日志作为校对。</p>
+                    <p>派单费用计算工式：（
+                        1）单产品100%实施价格（2）多产品按价格倒序排列，依次计算100%、75%、50%，计算费用率下限为50%。</p>
+                    <p>实施工时按工程师提交的工作日志起止时间为准。</p>
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <form action="" method="post" class="form-horizontal" role="form">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group required">
+                        <label class="col-sm-2 control-label" for="title">标题</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="title" name="title" required type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label" for="project">项目</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="project" name="project">
+                                {% for i in form.project.choices %}
+                                <option value="{{ i[0] }}">{{ i[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label" for="engineer">工程师</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="engineer" name="engineer">
+                                {% for i in form.engineer.choices %}
+                                <option value="{{ i[0] }}">{{ i[1] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">进场时间</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="datepick" name="begin_time" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="working_hours">工时</label>
+                        <div class="col-sm-10">
+
+                            <input class="form-control" id="working_hours" name="working_hours" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="products">产品列表</label>
+                        <div class="col-sm-10 checkbox">
+                            {% for i in form.products.choices %}
+                            <label for="products-0">
+                                <input name="products" type="checkbox" value="{{ i[0] }}">
+                                {{ i[1] }}
+                            </label><br>
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group  required">
+                        <label class="col-sm-2 control-label" for="description">实施说明</label>
+                        <div class="col-sm-10">
+                            <textarea rows="15" class="form-control" id="description" name="description"
+                                required></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        <input class="btn btn-primary" id="submit" name="submit" type="submit" value="提交">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#datepick').datetimepicker({
+            format: 'YYYY-MM-DD HH:mm'
+        });
+    });
+</script>
+{% endblock %}

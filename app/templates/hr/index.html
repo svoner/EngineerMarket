@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block scripts %}
+{{ super() }}
+{% endblock %}
+{% block app_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">人员列表</h3>
+    </div>
+    <table class="table table-responsive table-hover">
+        <tr align="center">
+            <td><b>编号</b></td>
+            <td><b>姓名</b></td>
+            <td><b>性别</b></td>
+            <td><b>角色</b></td>
+            <td><b>邮箱</b></td>
+            <td><b>Leader</b></td>
+            <td></td>
+        </tr>
+        {% for u in users %}
+        <tr align="center">
+            <td>{{ u.id }}</td>
+            <td>{{ u.name }}</td>
+            <td>{{ u.gender }}</td>
+            <td>{{ u.role.name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.is_manager }}</td>
+            <td><a href="{{ url_for('hr.edit_user', id=u.id) }}">编辑</a></td>
+            <td><a href="{{ url_for('hr.reset_password', id=u.id) }}">重置密码</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{{ render_pagination(pagination, endpoint=None, prev='<<', next='>>', ellipses='...', size=None, args={})}}
+{% endblock %}

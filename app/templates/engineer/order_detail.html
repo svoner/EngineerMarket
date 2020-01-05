@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block app_content %}
+<div class="col-md-3">
+    {% include "engineer/_order_sidebar.html"%}
+    {% if order.logs.all() != [] %}
+        {% include "engineer/_log_sidebar.html"%}
+    {% endif %}
+</div>
+<div class="col-md-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ title }}</h3>
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                <dt>实施描述</dt>
+                <dd>{{ order.description }}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+{% endblock %}

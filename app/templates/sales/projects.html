@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% from "bootstrap/pagination.html" import render_pagination %}
+{% block app_content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ title }}</h3></div>
+    <table class="table table-responsive table-hover">
+        <tr align="center">
+            <td><b>项目名称</b></td>
+            <td><b>联系人姓名</b></td>
+            <td><b>联系方式</b></td>
+            <td><b>项目地址</b></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% for project in projects %}
+        <tr align="center">
+            <td>{{ project.name }}</td>
+            <td>{{ project.customer_name }}</td>
+            <td>{{ project.customer_phone }}</td>
+            <td>{{ project.customer_address }}</td>
+            <td><a href="{{ url_for('sales.edit_project', id=project.id) }}">编辑</a></td>
+            <td><a href="{{ url_for('sales.delete_project', id=project.id) }}">删除</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{{ render_pagination(pagination, endpoint=None, prev='<<', next='>>', ellipses='...', size=None, args={})}}
+{% endblock %}
