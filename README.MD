@@ -28,8 +28,10 @@ source venv/bin/activate
 ```shell
 (venv) flask demo
 ```
-用户名 user1-20, 密码user，工程师
-用户名 user21-40, 密码user，销售
+
+使用用户名 user1-20 登录后，角色为 `工程师`。
+使用用户名 user21-40 登录后，角色为 `销售`。
+密码统一为 `user`
 
 # 生产环境的部署
 调整配置文件 config 中 ProductionConfig 部分的内容
