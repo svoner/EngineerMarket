@@ -1,6 +1,6 @@
 # E-R 图
 
-![](https://github.com/svoner/EngineerMarket/blob/master/documents/images/er_log.png?raw=true)
+![](https://github.com/svoner/EngineerMarket/blob/master/documents/images/er_log.png)
 ![](https://github.com/svoner/EngineerMarket/blob/master/documents/images/er_refuse.png?raw=true)
 ![](https://github.com/svoner/EngineerMarket/blob/master/documents/images/er_products.png?raw=true)
 ![](https://github.com/svoner/EngineerMarket/blob/master/documents/images/er_skills.png?raw=true)
