@@ -7,7 +7,7 @@ import random
 from datetime import timedelta
 
 
-class Code():
+class Code:
     engineer = 1  # 工程师
     sales = 2     # 销售
     hr = 3        # 人事（管理员）
@@ -59,8 +59,7 @@ class User(db.Model, UserMixin):
         user = User(
             name='管理员',
             username='admin',
-            role_id=Code.hr
-        )
+            role_id=Code.hr)
         user.set_password('admin')
         db.session.add(user)
         db.session.commit()
@@ -159,7 +158,7 @@ class State(db.Model):
 class Project(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     create_time = db.Column(db.DateTime)
-    name = db.Column(db.String(40), index=True, unique=True)
+    name = db.Column(db.String(15), index=True, unique=True)
     description = db.Column(db.String(40))
     customer_name = db.Column(db.String(4))
     customer_phone = db.Column(db.String(20))
@@ -311,7 +310,7 @@ class Skills(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey(
         'product.id'), primary_key=True)
-    level = db.Column(db.SmallInteger)
+    level = db.Column(db.Integer)
     update_description = db.Column(db.String(50), default='')
     user = db.relationship(
         'User'

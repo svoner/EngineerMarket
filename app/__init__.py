@@ -35,4 +35,3 @@ def create_app(config_class=DevelopmentConfig):
     app.register_blueprint(auth_bp)
 
     return app
-

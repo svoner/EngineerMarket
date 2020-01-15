@@ -4,6 +4,7 @@
 *.fish
 /.vscode
 /venv
+/.idea
 *.db
 *.swp
 __pycache__
