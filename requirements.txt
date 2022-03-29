@@ -27,7 +27,7 @@ lazy-object-proxy==1.4.3
 Mako==1.1.0
 MarkupSafe==1.1.1
 mccabe==0.6.1
-paramiko==2.7.1
+paramiko==2.10.1
 pycodestyle==2.5.0
 pycparser==2.19
 pylint==2.4.4
